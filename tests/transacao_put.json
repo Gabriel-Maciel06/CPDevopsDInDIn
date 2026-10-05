@@ -1,0 +1,10 @@
+{
+  "descricao": "Aquisição Expandida de Infraestrutura PaaS Azure Web App & SQL Database",
+  "valor": 3200.00,
+  "dataTransacao": "2026-10-05",
+  "tipo": "DESPESA",
+  "metodoPagamento": "CARTAO_CREDITO",
+  "categoriaId": 3,
+  "observacoes": "Upgrade de plano para atender demanda do cliente DimDim",
+  "status": "CONCLUIDA"
+}

@@ -1,0 +1,6 @@
+{
+  "endpoint": "DELETE /api/transacoes/5",
+  "descricao": "Exclusão física de transação financeira no Azure SQL Database",
+  "codigoEsperado": 204,
+  "corpoResposta": null
+}

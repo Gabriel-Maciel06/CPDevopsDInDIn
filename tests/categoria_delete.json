@@ -1,0 +1,15 @@
+{
+  "endpoint": "DELETE /api/categorias/5",
+  "descricao": "Exclusão física de categoria no Azure SQL Database (somente categorias sem transações vinculadas)",
+  "codigoEsperado": 204,
+  "corpoResposta": null,
+  "erroCategoriaEmUso": {
+    "codigo": 409,
+    "corpoResposta": {
+      "timestamp": "2026-10-05T15:12:13.528303",
+      "status": 409,
+      "message": "A categoria possui transações vinculadas. Exclua ou mova as transações antes de removê-la.",
+      "errors": []
+    }
+  }
+}

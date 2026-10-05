@@ -1,0 +1,13 @@
+{
+  "endpoint": "GET /api/categorias/1",
+  "descricao": "Consulta de categoria por ID",
+  "exemploResposta": {
+    "id": 1,
+    "nome": "Consultoria Cloud & Inovação",
+    "tipo": "RECEITA",
+    "icone": "💡",
+    "descricao": "Receitas de consultoria estratégica para clientes enterprise como Steve Jobs",
+    "dataCriacao": "2026-10-05T07:00:00",
+    "totalTransacoes": 1
+  }
+}

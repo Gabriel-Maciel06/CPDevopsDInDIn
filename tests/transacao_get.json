@@ -1,0 +1,18 @@
+{
+  "endpoint": "GET /api/transacoes/1",
+  "descricao": "Consulta de transação por ID",
+  "exemploResposta": {
+    "id": 1,
+    "descricao": "Contrato Consultoria Cloud - Steve Jobs / Apple",
+    "valor": 45000.00,
+    "dataTransacao": "2026-09-30",
+    "tipo": "RECEITA",
+    "metodoPagamento": "TRANSFERENCIA",
+    "categoriaId": 1,
+    "categoriaNome": "Consultoria Cloud & Inovação",
+    "categoriaIcone": "💡",
+    "observacoes": "Primeira parcela do projeto de modernização PaaS",
+    "status": "CONCLUIDA",
+    "dataRegistro": "2026-10-05T07:00:00"
+  }
+}

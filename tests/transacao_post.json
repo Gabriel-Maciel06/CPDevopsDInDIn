@@ -1,0 +1,10 @@
+{
+  "descricao": "Aquisição de Infraestrutura PaaS Azure Web App & SQL",
+  "valor": 2850.75,
+  "dataTransacao": "2026-10-05",
+  "tipo": "DESPESA",
+  "metodoPagamento": "CARTAO_CREDITO",
+  "categoriaId": 3,
+  "observacoes": "Provisionamento de ambiente de testes para Steve Jobs",
+  "status": "CONCLUIDA"
+}

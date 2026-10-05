@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DimDim Cloud Financial | Steve Jobs Advisory Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏦</text></svg>">
+</head>
+<body>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <div class="brand-icon">🏦</div>
+            <div>
+                <div class="brand-title">DimDim <span>Cloud Financial</span></div>
+                <div class="brand-sub">Steve Jobs & DimDim Advisory — Azure PaaS Edition</div>
+            </div>
+        </div>
+
+        <div class="nav-badges">
+            <span class="badge badge-azure" title="Hospedado no Microsoft Azure App Service">
+                <span class="badge-dot"></span> Azure Web App (PaaS)
+            </span>
+            <span class="badge badge-sql" id="badge-db-status" title="Conexão com Azure SQL Database">
+                <span class="badge-dot"></span> Azure SQL Database
+            </span>
+            <span class="badge badge-telemetry" id="badge-telemetry" title="Monitoramento ativo com Application Insights">
+                <span class="badge-dot pulse"></span> App Insights
+            </span>
+            <a href="/swagger-ui.html" target="_blank" class="nav-link-btn" title="Abrir Documentação Swagger OpenAPI">
+                📘 Swagger Docs
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- Cloud Health & Advisory Banner -->
+        <section class="advisory-banner">
+            <div class="banner-content">
+                <div class="banner-avatar">🍏</div>
+                <div>
+                    <div class="banner-title">Ambiente de Validação em Nuvem Ativo</div>
+                    <p class="banner-desc">
+                        Solução PaaS validada para <strong>Steve Jobs</strong> e diretoria <strong>DimDim</strong>: alta disponibilidade com <strong>Azure App Service</strong>, persistência relacional transacional com <strong>Azure SQL Database</strong> e telemetria profunda com <strong>Application Insights</strong>.
+                    </p>
+                </div>
+            </div>
+            <div class="banner-status" id="banner-health-box">
+                <div class="status-indicator">
+                    <span class="pulse-indicator"></span>
+                    <span id="health-status-text">Conectando aos serviços Azure...</span>
+                </div>
+                <div class="status-meta" id="health-latency">Latência do Banco: -- ms</div>
+            </div>
+        </section>
+
+        <!-- KPI Financial Cards -->
+        <section class="kpi-grid">
+            <div class="kpi-card card-balance">
+                <div class="kpi-header">
+                    <span class="kpi-title">Saldo Líquido</span>
+                    <span class="kpi-icon">💰</span>
+                </div>
+                <div class="kpi-value" id="kpi-saldo">R$ 0,00</div>
+                <div class="kpi-caption" id="kpi-saldo-caption">Calculado a partir de transações concluídas</div>
+            </div>
+
+            <div class="kpi-card card-income">
+                <div class="kpi-header">
+                    <span class="kpi-title">Total Receitas</span>
+                    <span class="kpi-icon">📈</span>
+                </div>
+                <div class="kpi-value text-green" id="kpi-receitas">R$ 0,00</div>
+                <div class="kpi-caption">Entradas financeiras registradas</div>
+            </div>
+
+            <div class="kpi-card card-expense">
+                <div class="kpi-header">
+                    <span class="kpi-title">Total Despesas</span>
+                    <span class="kpi-icon">📉</span>
+                </div>
+                <div class="kpi-value text-red" id="kpi-despesas">R$ 0,00</div>
+                <div class="kpi-caption">Saídas e custos operacionais</div>
+            </div>
+
+            <div class="kpi-card card-count">
+                <div class="kpi-header">
+                    <span class="kpi-title">Operações Registradas</span>
+                    <span class="kpi-icon">📊</span>
+                </div>
+                <div class="kpi-value" id="kpi-transacoes-count">0</div>
+                <div class="kpi-caption"><span id="kpi-categorias-count">0</span> categorias cadastradas</div>
+            </div>
+        </section>
+
+        <!-- Main Navigation Tabs -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="tab-transacoes">
+                💳 Transações Financeiras (Tabela 1)
+            </button>
+            <button class="tab-btn" data-tab="tab-categorias">
+                📁 Categorias Financeiras (Tabela 2)
+            </button>
+            <button class="tab-btn" data-tab="tab-arquitetura">
+                ☁️ Arquitetura PaaS & Telemetria
+            </button>
+        </div>
+
+        <!-- TAB 1: TRANSAÇÕES -->
+        <section id="tab-transacoes" class="tab-content active">
+            <div class="section-toolbar">
+                <div class="toolbar-left">
+                    <h2 class="section-title">Transações Financeiras DimDim</h2>
+                    <p class="section-subtitle">CRUD completo com persistência em tempo real no Azure SQL Server</p>
+                </div>
+                <div class="toolbar-actions">
+                    <select id="filter-tipo-transacao" class="input-select" onchange="filtrarTransacoes()">
+                        <option value="TODOS">Todos os Tipos</option>
+                        <option value="RECEITA">Apenas Receitas (Entradas)</option>
+                        <option value="DESPESA">Apenas Despesas (Saídas)</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="abrirModalTransacao()">
+                        <span>+</span> Nova Transação
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria (FK)</th>
+                            <th>Tipo</th>
+                            <th>Pagamento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th class="text-right">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-transacoes">
+                        <tr>
+                            <td colspan="9" class="text-center py-6">Carregando transações do Azure SQL...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TAB 2: CATEGORIAS -->
+        <section id="tab-categorias" class="tab-content">
+            <div class="section-toolbar">
+                <div class="toolbar-left">
+                    <h2 class="section-title">Categorias Financeiras</h2>
+                    <p class="section-subtitle">Tabela primária do relacionamento relacional 1:N com as transações</p>
+                </div>
+                <div class="toolbar-actions">
+                    <button class="btn btn-primary" onclick="abrirModalCategoria()">
+                        <span>+</span> Nova Categoria
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ícone</th>
+                            <th>Nome da Categoria</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Transações Vinculadas</th>
+                            <th>Data Criação</th>
+                            <th class="text-right">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-categorias">
+                        <tr>
+                            <td colspan="8" class="text-center py-6">Carregando categorias do Azure SQL...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TAB 3: ARQUITETURA & TELEMETRIA -->
+        <section id="tab-arquitetura" class="tab-content">
+            <div class="section-toolbar">
+                <div class="toolbar-left">
+                    <h2 class="section-title">Topologia de Nuvem & Monitoramento PaaS</h2>
+                    <p class="section-subtitle">Serviços gerenciados Microsoft Azure provisionados e telemetria ativa</p>
+                </div>
+            </div>
+
+            <div class="cloud-grid">
+                <div class="cloud-card">
+                    <div class="cloud-card-header">
+                        <span class="cloud-badge">PaaS Application</span>
+                        <h3>Azure App Service (Linux Web App)</h3>
+                    </div>
+                    <p>Hospeda a aplicação Java 21 LTS com Spring Boot, balanceamento de carga nativo, certificados SSL gerenciados e suporte a escalabilidade horizontal.</p>
+                    <ul class="cloud-specs">
+                        <li><strong>Plano:</strong> B1 / F1 Service Plan</li>
+                        <li><strong>Deploy Automatizado:</strong> Azure CLI (<code>az webapp deploy</code>)</li>
+                        <li><strong>Protocolo:</strong> HTTPS TLS 1.3</li>
+                    </ul>
+                </div>
+
+                <div class="cloud-card">
+                    <div class="cloud-card-header">
+                        <span class="cloud-badge badge-sql">PaaS Database</span>
+                        <h3>Azure SQL Database (SQL Server)</h3>
+                    </div>
+                    <p>Banco relacional PaaS nativo com replicação e backups automáticos, protegido por Firewall de Rede e autenticação segura.</p>
+                    <ul class="cloud-specs">
+                        <li><strong>SGBD:</strong> Microsoft SQL Server v16+</li>
+                        <li><strong>Modelo Relacional:</strong> <code>tb_dimdim_categoria</code> (1) ➔ <code>tb_dimdim_transacao</code> (N)</li>
+                        <li><strong>Segurança:</strong> Variáveis criptografadas no App Settings</li>
+                    </ul>
+                </div>
+
+                <div class="cloud-card">
+                    <div class="cloud-card-header">
+                        <span class="cloud-badge badge-telemetry">APM & Observability</span>
+                        <h3>Azure Application Insights</h3>
+                    </div>
+                    <p>Monitoramento contínuo de latência, contagem de requisições HTTP, dependências JDBC no Azure SQL, Live Metrics e rastreamento de falhas.</p>
+                    <ul class="cloud-specs">
+                        <li><strong>Instrumentação:</strong> Java 3.x In-Process Agent</li>
+                        <li><strong>Métricas:</strong> Tempo de resposta de queries SQL e chamadas REST</li>
+                        <li><strong>Workspace:</strong> Azure Log Analytics integrado</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Equipe e Metadados -->
+            <div class="team-footer-card">
+                <h3>👥 Equipe de Desenvolvimento & DevOps — FIAP 2TDSR</h3>
+                <div class="team-members-grid">
+                    <div class="team-member"><strong>Gabriel Maciel Alves de Oliveira</strong> <span>RM562795</span></div>
+                    <div class="team-member"><strong>Vitória Rodrigues Martins</strong> <span>RM565160</span></div>
+                    <div class="team-member"><strong>Augusto Bonomo Júnior</strong> <span>RM565155</span></div>
+                    <div class="team-member"><strong>Thomas Fontes</strong> <span>RM562254</span></div>
+                    <div class="team-member"><strong>Matheus Pereira Molina</strong> <span>RM563399</span></div>
+                </div>
+                <div class="team-discipline">
+                    <strong>Disciplina:</strong> DevOps Tools & Cloud Computing | <strong>Professor:</strong> Prof. João Menk
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: TRANSAÇÃO (NOVA / EDITAR) -->
+    <div id="modal-transacao" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-transacao-title">Nova Transação DimDim</h3>
+                <button class="modal-close-btn" onclick="fecharModalTransacao()">&times;</button>
+            </div>
+            <form id="form-transacao" onsubmit="salvarTransacao(event)">
+                <input type="hidden" id="transacao-id">
+
+                <div class="form-group">
+                    <label for="transacao-descricao">Descrição da Transação *</label>
+                    <input type="text" id="transacao-descricao" class="input-control" placeholder="Ex: Consultoria Steve Jobs" required minlength="2" maxlength="150">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transacao-valor">Valor (R$) *</label>
+                        <input type="number" id="transacao-valor" class="input-control" step="0.01" min="0.01" placeholder="Ex: 1500.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacao-data">Data da Transação *</label>
+                        <input type="date" id="transacao-data" class="input-control" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transacao-tipo">Tipo de Fluxo *</label>
+                        <select id="transacao-tipo" class="input-control" required onchange="filtrarCategoriasPorTipoNoModal()">
+                            <option value="RECEITA">Receita (Entrada)</option>
+                            <option value="DESPESA">Despesa (Saída)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacao-categoria">Categoria (FK) *</label>
+                        <select id="transacao-categoria" class="input-control" required>
+                            <option value="">Carregando categorias...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transacao-pagamento">Método de Pagamento *</label>
+                        <select id="transacao-pagamento" class="input-control" required>
+                            <option value="PIX">PIX</option>
+                            <option value="CARTAO_CREDITO">Cartão de Crédito</option>
+                            <option value="BOLETO">Boleto Bancário</option>
+                            <option value="TRANSFERENCIA">Transferência / TED</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transacao-status">Status *</label>
+                        <select id="transacao-status" class="input-control" required>
+                            <option value="CONCLUIDA">Concluída</option>
+                            <option value="PENDENTE">Pendente</option>
+                            <option value="CANCELADA">Cancelada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transacao-obs">Observações</label>
+                    <textarea id="transacao-obs" class="input-control" rows="2" placeholder="Notas sobre a transação ou cliente"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalTransacao()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-salvar-transacao">Salvar no Azure SQL</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: CATEGORIA (NOVA / EDITAR) -->
+    <div id="modal-categoria" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-categoria-title">Nova Categoria</h3>
+                <button class="modal-close-btn" onclick="fecharModalCategoria()">&times;</button>
+            </div>
+            <form id="form-categoria" onsubmit="salvarCategoria(event)">
+                <input type="hidden" id="categoria-id">
+
+                <div class="form-group">
+                    <label for="categoria-nome">Nome da Categoria *</label>
+                    <input type="text" id="categoria-nome" class="input-control" placeholder="Ex: Investimentos Cloud" required minlength="2" maxlength="100">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categoria-tipo">Tipo de Operação *</label>
+                        <select id="categoria-tipo" class="input-control" required>
+                            <option value="RECEITA">Receita</option>
+                            <option value="DESPESA">Despesa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria-icone">Ícone / Emoji</label>
+                        <select id="categoria-icone" class="input-control">
+                            <option value="💡">💡 Inovação & Consultoria</option>
+                            <option value="💳">💳 SaaS & Assinaturas</option>
+                            <option value="☁️">☁️ Cloud Infrastructure</option>
+                            <option value="🛠️">🛠️ Engenharia & DevOps</option>
+                            <option value="💰">💰 Finanças & Investimentos</option>
+                            <option value="🍏">🍏 Apple & Parcerias</option>
+                            <option value="📈">📈 Receita Geral</option>
+                            <option value="📉">📉 Despesa Geral</option>
+                            <option value="📁">📁 Outros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria-descricao">Descrição</label>
+                    <textarea id="categoria-descricao" class="input-control" rows="2" placeholder="Finalidade desta categoria financeira"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalCategoria()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-salvar-categoria">Salvar Categoria</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="/js/app.js"></script>
+</body>
+</html>

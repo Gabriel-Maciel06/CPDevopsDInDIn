@@ -1,0 +1,50 @@
+# Pipeline OPCIONAL de CI/CD (o deploy oficial do projeto é scripts/deploy_azure.sh com az webapp deploy).
+# Para ativar: copie este arquivo para .github/workflows/deploy.yml e crie o secret AZURE_CREDENTIALS
+# (saída de: az ad sp create-for-rbac --name sp-dimdim --role contributor
+#   --scopes /subscriptions/<SUB_ID>/resourceGroups/rg-dimdim-webapp --json-auth)
+name: CI/CD Deploy DimDim Web App to Azure
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '21'
+  APP_NAME: 'app-dimdim-rm562795'
+  RESOURCE_GROUP: 'rg-dimdim-webapp'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Secrets não podem ser usados direto em `if:`; expor como env permite pular o deploy
+      # quando o secret não está configurado (ex: forks), mantendo o build como CI.
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+
+    steps:
+      - name: 📥 Checkout do Código Fonte
+        uses: actions/checkout@v4
+
+      - name: ☕ Configurar Java JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: 🔨 Compilar, Testar e Empacotar com Maven
+        run: mvn -B clean package
+
+      - name: 🔐 Autenticar na Microsoft Azure
+        uses: azure/login@v2
+        if: ${{ env.AZURE_CREDENTIALS != '' }}
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 🚀 Realizar Deploy no Azure Web App (PaaS)
+        uses: azure/webapps-deploy@v3
+        if: ${{ env.AZURE_CREDENTIALS != '' }}
+        with:
+          app-name: ${{ env.APP_NAME }}
+          package: '${{ github.workspace }}/target/dimdim-webapp-1.0.0.jar'
